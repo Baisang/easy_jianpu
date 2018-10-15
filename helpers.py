@@ -33,7 +33,7 @@ def convert_ly_to_pdf(ly):
         f.write(ly)
     # Run lilypond using this file
     try:
-        subprocess.check_output(['lilypond', '-o', file_slug, ly_file_name], stderr=subprocess.STDOUT, shell=True)
+        subprocess.check_output(['lilypond', '-o', file_slug, ly_file_name], stderr=subprocess.STDOUT)
     except Exception as e:
         return e
     # TODO: support like midis and stuff
