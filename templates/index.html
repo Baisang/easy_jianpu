@@ -7,11 +7,14 @@
         {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
-                    <h3>{{ message }}</h3>
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <h1>Easy Jianpu</h1>
+        <div class="container">
+            <h1 class="text-center">Easy Jianpu</h1>
         <p>
             This is a tool for converting jianpu to western staff PDFs, PDFs,
             or other formats. You type in the jianpu using a special format,
@@ -106,21 +109,22 @@
     </div>
 	</div>
     </div>
-
-
-
+    <br>
         <form action="/jianpu" method="post">
-            Jianpu: <br><textarea name=jianpu cols="80" rows="30">{{ input }}</textarea>
-            <br><br>
-            Desired output: <br>
-            <select name="format">
+            <div class="form-group">
+            <label for="jianpu">Jianpu</label>
+            <textarea class="form-control" id="jianpu" placeholder="Enter your jianpu here" name=jianpu rows="20">{{ input }}</textarea>
+            <label for="format">Desired output format</label>
+            <select id="format" class="form-control" name="format">
                 <option value="western">Western</option>
                 <option value="jianpu">Jianpu</option>
                 <option value="midi">Midi (for musescore import)</option>
             </select>
-            <br><br>
-            <input type="submit" value="Submit">
+            <br>
+            <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
         </form>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
