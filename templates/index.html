@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Jianpu Converter</title>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                    <h3>{{ message }}</h3>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="/jianpu" method="post">
+            Jianpu: <br><textarea name=jianpu cols="80" rows="30"></textarea>
+            <br><br>
+            Desired output: <br>
+            <select name="format">
+                <option value="western">Western</option>
+                <option value="jianpu">Jianpu</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
