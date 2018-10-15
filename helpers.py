@@ -35,8 +35,6 @@ def convert_ly_to_pdf(ly):
     try:
         subprocess.check_output(['lilypond', '-o', file_slug, ly_file_name], stderr=subprocess.STDOUT, shell=True)
     except Exception as e:
-        import pdb
-        pdb.set_trace()
         return e
     # TODO: support like midis and stuff
     return '{}.pdf'.format(file_slug)
