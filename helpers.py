@@ -7,6 +7,11 @@ def generate_random_filename(extension):
     file_name += '.' + extension
     return file_name
 
+def convert_jianpu_to_midi(jianpu):
+    pdf = convert_jianpu_to_jianpu(jianpu)
+    file_slug = pdf[:len(pdf)-4]
+    return '{}.midi'.format(file_slug)
+
 def convert_jianpu_to_western(jianpu):
     ly = convert_jianpu_to_ly(jianpu, western=True)
     ly = convert_jianpuly_westernly(ly)
