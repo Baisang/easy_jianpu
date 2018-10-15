@@ -23,5 +23,5 @@ def convert_jianpu():
         pdf = convert_jianpu_to_jianpu(request.form['jianpu'])
     if type(pdf) != str:
         flash(pdf)
-        return render_template('index.html')
+        return render_template('index.html', input=request.form['jianpu'])
     return send_file(pdf)
