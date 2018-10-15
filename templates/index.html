@@ -10,8 +10,80 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
+        <h1>Easy Jianpu</h1>
+        <p>
+            This is a tool for converting jianpu to western staff PDFs, PDFs,
+            or other formats. You type in the jianpu using a special format,
+            then select the desired output form, and submit.
+        </p>
+        <h3>Instructions (Chinese)</h3>
+        <p><a href="http://www.cnblogs.com/quantumman/p/5189701.html">Original Source</a></p>
+		<p>该脚本支持的简谱语法规则如下：</p>
+		<ul>
+		<li>音阶：1 2 3 4 5 6 7 1'</li>
+		<li>空拍：0</li>
+		<li>升、降音：#1 b2</li>
+		<li>低两个八度、低八度、中音、高八度、高两个八度：1,, 1, 1 1' 1''</li>
+		<li>六十四分、三十二分、十六分、八分、四分音符（一拍）：h1 d1 s1 q1 1</li>
+		<li>符点音符：s1. q1. 1.</li>
+		<li>半音符（两拍）：1 -</li>
+		<li>符点半音符（三拍）：1 - -</li>
+		<li>全音符（四拍）：1 - - -</li>
+		<li>拍子：4/4</li>
+		<li>大调：1=Bb</li>
+		<li>小调：6=F#</li>
+		<li>标题：title=采茶舞曲</li>
+		<li>三联音：3[ q1 q1 q1 ]</li>
+		<li>重复：R{ 1 1 1 } A{ 2 | 3 }</li>
+		</ul>
+        <p>一个典型的简谱源文件如下：</p>
+            <pre>
+            title=标题
+
+            1=C
+            2/4
+            1 2 3 4 5 6 7 1'
+            </pre>
+        <h3>Instructions (English)</h3>
+        <p><a href="http://people.ds.cam.ac.uk/ssb22/mwrhome/jianpu-ly.html">Original Source</a></p>
+		<table border>
+		<tr><td>Scale going up</td><td><kbd>1 2 3 4 5 6 7 1'</kbd></td>
+		<tr><td>Accidentals</td><td><kbd>1 #1 2 b2 1</kbd></td>
+		<tr><td>Octaves</td><td><kbd>1,, 1, 1 1' 1''</kbd></td>
+		<tr><td>Shortcuts for 1' and 2'</td><td><kbd>8 9</kbd></td>
+		<tr><td>Semiquaver, quaver, crotchet (16/8/4th notes)</td><td><kbd>s1 q1 1</kbd></td>
+		<tr><td>Dotted versions of the above (50% longer)</td><td><kbd>s1. q1. 1.</kbd></td>
+		<tr><td>Demisemiquaver, hemidemisemiquaver (32/64th notes)</td><td><kbd>d1 h1</kbd></td>
+		<tr><td>Minims (half notes) use dashes</td><td><kbd>1 -</kbd></td>
+		<tr><td>Dotted minim</td><td><kbd>1 - -</kbd></td>
+		<tr><td>Semibreve (whole note)</td><td><kbd>1 - - -</kbd></td>
+		<tr><td>Time signature</td><td><kbd>4/4</kbd></td>
+		<tr><td>Time signature with quaver anacrusis (8th-note pickup)</td><td><kbd>4/4,8</kbd></td>
+		<tr><td>Key signature (major)</td><td><kbd>1=Bb</kbd></td>
+		<tr><td>Key signature (minor)</td><td><kbd>6=F#</kbd></td>
+		<tr><td>Lyrics</td><td><kbd>L: here are the syl- la- bles (all on one line)</kbd></td>
+		<tr><td>Lyrics (verse 1)</td><td><kbd>L: 1. Here is verse one</kbd></td>
+		<tr><td>Lyrics (verse 2)</td><td><kbd>L: 2. Here is verse two</kbd></td>
+		<tr><td>Hanzi lyrics (auto space)</td><td><kbd>H: hanzi (with or without spaces)</kbd></td>
+		<tr><td>Lilypond headers</td><td><kbd>title=the title (on a line of its own)</kbd></td>
+		<tr><td>Multiple movements</td><td><kbd>NextScore</kbd></td>
+		<tr><td>Prohibit page breaks until end of this movement</td><td><kbd>OnePage</kbd></td>
+		<tr><td>Add a Western staff doubling the jianpu</td><td><kbd>WithStaff</kbd></td>
+		<tr><td>Tuplets</td><td><kbd>3[ q1 q1 q1 ]</kbd></td>
+		<tr><td>Da capo</td><td><kbd>1 1 Fine 1 1 1 1 1 1 DC</kbd></td>
+		<tr><td>Repeat (with alternate endings)</td><td><kbd>R{ 1 1 1 } A{ 2 | 3 }</kbd></td>
+		<tr><td>Short repeats (percent)</td><td><kbd>R4{ 1 2 }</kbd></td>
+		<tr><td>Ties (like Lilypond's, if you don't want dashes)</td><td><kbd>1 ~ 1</kbd></td>
+		<tr><td>Slurs (like Lilypond's)</td><td><kbd>1 ( 2 )</kbd></td>
+		<tr><td>Dynamics (applies to previous note)</td><td><kbd>\p \mp \f</kbd></td>
+		<tr><td>Other 1-word Lilypond \ commands</td><td><kbd>\fermata \> \! \( \) etc</kbd></td>
+		<tr><td>Other Lilypond code</td><td><kbd>LP: (block of code) :LP (each delimeter at start of its line)</kbd></td>
+		</table>
+
+
+
         <form action="/jianpu" method="post">
-            Jianpu: <br><textarea name=jianpu cols="80" rows="30"></textarea>
+            Jianpu: <br><textarea name=jianpu cols="80" rows="30">{{ input }}</textarea>
             <br><br>
             Desired output: <br>
             <select name="format">
