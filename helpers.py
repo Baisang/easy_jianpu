@@ -1,25 +1,46 @@
 import subprocess
+import io
 import random
 import string
+from pathlib import Path
 
 def generate_random_filename(extension):
     file_name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8))
     file_name += '.' + extension
     return file_name
 
+def cleanup_files(file_slug):
+    for p in Path('.').glob(file_slug + '*'):
+        p.unlink()
+
+def read_file_bytes(file_name):
+    with open(file_name, 'rb') as f:
+        return io.BytesIO(f.read())
+
 def convert_jianpu_to_midi(jianpu):
-    pdf = convert_jianpu_to_jianpu(jianpu)
+    ly = convert_jianpu_to_ly(jianpu)
+    pdf = convert_ly_to_pdf(ly)
     file_slug = pdf[:len(pdf)-4]
-    return '{}.midi'.format(file_slug)
+    bytes = read_file_bytes('{}.midi'.format(file_slug))
+    cleanup_files(file_slug)
+    return bytes
 
 def convert_jianpu_to_western(jianpu):
-    ly = convert_jianpu_to_ly(jianpu, western=True)
-    ly = convert_jianpuly_westernly(ly)
-    return convert_ly_to_pdf(ly)
+    return convert_jianpu_to_pdf(jianpu, western=True)
 
 def convert_jianpu_to_jianpu(jianpu):
-    ly = convert_jianpu_to_ly(jianpu)
-    return convert_ly_to_pdf(ly)
+    return convert_jianpu_to_pdf(jianpu, western=False)
+
+def convert_jianpu_to_pdf(jianpu, western=False):
+    ly = convert_jianpu_to_ly(jianpu, western=western)
+    if western:
+        ly = convert_jianpuly_westernly(ly)
+    pdf = convert_ly_to_pdf(ly)
+    file_slug = pdf[:len(pdf)-4]
+    bytes = read_file_bytes(pdf)
+    cleanup_files(file_slug)
+    return bytes
+
 
 def convert_jianpu_to_ly(jianpu, western=False):
     if western:
