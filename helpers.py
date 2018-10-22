@@ -1,21 +1,27 @@
-import subprocess
 import io
 import random
 import string
+import subprocess
 from pathlib import Path
 
+
 def generate_random_filename(extension):
-    file_name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8))
+    file_name = ''.join(random.SystemRandom().choice(
+        string.ascii_uppercase + string.digits) for _ in range(8),
+    )
     file_name += '.' + extension
     return file_name
+
 
 def cleanup_files(file_slug):
     for p in Path('.').glob(file_slug + '*'):
         p.unlink()
 
+
 def read_file_bytes(file_name):
     with open(file_name, 'rb') as f:
         return io.BytesIO(f.read())
+
 
 def convert_jianpu_to_midi(jianpu):
     ly = convert_jianpu_to_ly(jianpu)
@@ -25,11 +31,14 @@ def convert_jianpu_to_midi(jianpu):
     cleanup_files(file_slug)
     return bytes
 
+
 def convert_jianpu_to_western(jianpu):
     return convert_jianpu_to_pdf(jianpu, western=True)
 
+
 def convert_jianpu_to_jianpu(jianpu):
     return convert_jianpu_to_pdf(jianpu, western=False)
+
 
 def convert_jianpu_to_pdf(jianpu, western=False):
     ly = convert_jianpu_to_ly(jianpu, western=western)
@@ -46,10 +55,15 @@ def convert_jianpu_to_ly(jianpu, western=False):
     if western:
         if 'WithStaff' not in jianpu:
             jianpu = 'WithStaff\n{}'.format(jianpu)
-    s = subprocess.Popen(['python2', 'jianpu-ly.py'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    s = subprocess.Popen(
+        ['python2', 'jianpu-ly.py'],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+    )
     input = jianpu.encode()
     output, _ = s.communicate(input)
     return output.decode()
+
 
 def convert_ly_to_pdf(ly):
     # Write ly to a temporary file
@@ -59,11 +73,15 @@ def convert_ly_to_pdf(ly):
         f.write(ly)
     # Run lilypond using this file
     try:
-        subprocess.check_output(['lilypond', '-o', file_slug, ly_file_name], stderr=subprocess.STDOUT)
+        subprocess.check_output(
+            ['lilypond', '-o', file_slug, ly_file_name],
+            stderr=subprocess.STDOUT,
+        )
     except Exception as e:
         return e
     # TODO: support like midis and stuff
     return '{}.pdf'.format(file_slug)
+
 
 def convert_jianpuly_westernly(jianpuly):
     flag = 1
@@ -77,4 +95,3 @@ def convert_jianpuly_westernly(jianpuly):
         if 'END JIANPU STAFF' in line:
             flag = 1
     return '\n'.join(new_ly)
-

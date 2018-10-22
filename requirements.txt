@@ -1,0 +1,17 @@
+aspy.refactor-imports==0.5.3
+aspy.yaml==1.1.1
+cached-property==1.5.1
+cfgv==1.1.0
+Click==7.0
+Flask==1.0.2
+identify==1.1.7
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+nodeenv==1.3.2
+pre-commit==1.11.2
+PyYAML==3.13
+six==1.11.0
+toml==0.10.0
+virtualenv==16.0.0
+Werkzeug==0.14.1

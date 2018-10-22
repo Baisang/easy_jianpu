@@ -1,21 +1,24 @@
-from flask import Flask
 import io
+
 from flask import flash
+from flask import Flask
+from flask import render_template
 from flask import request
 from flask import send_file
-from flask import render_template
 
-from helpers import convert_jianpu_to_western
 from helpers import convert_jianpu_to_jianpu
 from helpers import convert_jianpu_to_midi
+from helpers import convert_jianpu_to_western
 from helpers import generate_random_filename
 
 app = Flask(__name__)
 app.secret_key = b'thisisnotasecretkey'
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 @app.route('/jianpu', methods=['POST'])
 def convert_jianpu():
